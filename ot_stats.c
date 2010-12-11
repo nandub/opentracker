@@ -745,17 +745,10 @@ static pthread_t thread_id;
 void stats_init( ) {
   ot_start_time = g_now_seconds;
   pthread_create( &thread_id, NULL, stats_worker, NULL );
-#ifdef WANT_SYSLOGS
-  openlog( "opentracker", 0, LOG_USER );
-  setlogmask(LOG_UPTO(LOG_INFO));
-#endif
 }
 
 void stats_deinit( ) {
   pthread_cancel( thread_id );
-#ifdef WANT_SYSLOGS
-  closelog();
-#endif
 }
 
-const char *g_version_stats_c = "$Source: /home/cvsroot/opentracker/ot_stats.c,v $: $Revision: 1.63 $\n";
+const char *g_version_stats_c = "$Source: /home/cvsroot/opentracker/ot_stats.c,v $: $Revision: 1.64 $\n";

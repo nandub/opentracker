@@ -2,7 +2,7 @@
    It is considered beerware. Prost. Skol. Cheers or whatever.
    Some of the stuff below is stolen from Fefes example libowfat httpd.
 
-   $Id: opentracker.c,v 1.232 2010/08/18 00:43:12 erdgeist Exp $ */
+   $Id: opentracker.c,v 1.233 2010/12/11 15:50:56 erdgeist Exp $ */
 
 /* System */
 #include <stdlib.h>
@@ -16,6 +16,9 @@
 #include <pwd.h>
 #include <ctype.h>
 #include <pthread.h>
+#ifdef WANT_SYSLOGS
+#include <syslog.h>
+#endif
 
 /* Libowfat */
 #include "socket.h"
@@ -59,6 +62,11 @@ static void signal_handler( int s ) {
     g_opentracker_running = 0;
 
     trackerlogic_deinit();
+
+#ifdef WANT_SYSLOGS
+    closelog();
+#endif
+
     exit( 0 );
   } else if( s == SIGALRM ) {
     /* Maintain our copy of the clock. time() on BSDs is very expensive. */
@@ -600,6 +608,11 @@ int main( int argc, char **argv ) {
     ot_try_bind( serverip, 6969, FLAG_UDP );
   }
 
+#ifdef WANT_SYSLOGS
+  openlog( "opentracker", 0, LOG_USER );
+  setlogmask(LOG_UPTO(LOG_INFO));
+#endif
+
   if( drop_privileges( g_serveruser ? g_serveruser : "nobody", g_serverdir ) == -1 )
     panic( "drop_privileges failed, exiting. Last error");
 
@@ -631,4 +644,4 @@ int main( int argc, char **argv ) {
   return 0;
 }
 
-const char *g_version_opentracker_c = "$Source: /home/cvsroot/opentracker/opentracker.c,v $: $Revision: 1.232 $\n";
+const char *g_version_opentracker_c = "$Source: /home/cvsroot/opentracker/opentracker.c,v $: $Revision: 1.233 $\n";
