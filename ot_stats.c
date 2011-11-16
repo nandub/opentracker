@@ -566,7 +566,7 @@ size_t stats_return_tracker_version( char *reply ) {
 }
 
 size_t return_stats_for_tracker( char *reply, int mode, int format ) {
-  format = format;
+  (void) format;
   switch( mode & TASK_TASK_MASK ) {
     case TASK_STATS_CONNS:
       return stats_connections_mrtg( reply );
@@ -725,7 +725,7 @@ static void * stats_worker( void * args ) {
   int iovec_entries;
   struct iovec *iovector;
 
-  args = args;
+  (void) args;
 
   while( 1 ) {
     ot_tasktype tasktype = TASK_STATS;
@@ -751,4 +751,4 @@ void stats_deinit( ) {
   pthread_cancel( thread_id );
 }
 
-const char *g_version_stats_c = "$Source: /home/cvsroot/opentracker/ot_stats.c,v $: $Revision: 1.64 $\n";
+const char *g_version_stats_c = "$Source: /home/cvsroot/opentracker/ot_stats.c,v $: $Revision: 1.65 $\n";

@@ -57,7 +57,7 @@ static void * fullscrape_worker( void * args ) {
   int iovec_entries;
   struct iovec *iovector;
 
-  args = args;
+  (void) args;
 
   while( 1 ) {
     ot_tasktype tasktype = TASK_FULLSCRAPE;
@@ -238,4 +238,4 @@ static void fullscrape_make( int *iovec_entries, struct iovec **iovector, ot_tas
 }
 #endif
 
-const char *g_version_fullscrape_c = "$Source: /home/cvsroot/opentracker/ot_fullscrape.c,v $: $Revision: 1.33 $\n";
+const char *g_version_fullscrape_c = "$Source: /home/cvsroot/opentracker/ot_fullscrape.c,v $: $Revision: 1.34 $\n";

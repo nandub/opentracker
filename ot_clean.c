@@ -100,7 +100,7 @@ int clean_single_torrent( ot_torrent *torrent ) {
 /* Clean up all peers in current bucket, remove timedout pools and
  torrents */
 static void * clean_worker( void * args ) {
-  args=args;
+  (void) args;
   while( 1 ) {
     int bucket = OT_BUCKET_COUNT;
     while( bucket-- ) {
@@ -134,4 +134,4 @@ void clean_deinit( void ) {
   pthread_cancel( thread_id );
 }
 
-const char *g_version_clean_c = "$Source: /home/cvsroot/opentracker/ot_clean.c,v $: $Revision: 1.19 $\n";
+const char *g_version_clean_c = "$Source: /home/cvsroot/opentracker/ot_clean.c,v $: $Revision: 1.20 $\n";
