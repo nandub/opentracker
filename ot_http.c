@@ -219,10 +219,14 @@ static const ot_keywords keywords_format[] =
     tai6464 t;
 #ifdef WANT_COMPRESSION_GZIP
     ws->request[ws->request_size] = 0;
+#ifdef WANT_COMPRESSION_GZIP_ALWAYS
     if( strstr( read_ptr - 1, "gzip" ) ) {
+#endif
       cookie->flag |= STRUCT_HTTP_FLAG_GZIP;
       format |= TASK_FLAG_GZIP;
+#ifdef WANT_COMPRESSION_GZIP_ALWAYS
     }
+#endif
 #endif
     /* Pass this task to the worker thread */
     cookie->flag |= STRUCT_HTTP_FLAG_WAITINGFORTASK;
@@ -627,4 +631,4 @@ ssize_t http_handle_request( const int64 sock, struct ot_workstruct *ws ) {
   return ws->reply_size;
 }
 
-const char *g_version_http_c = "$Source: /home/cvsroot/opentracker/ot_http.c,v $: $Revision: 1.52 $\n";
+const char *g_version_http_c = "$Source: /home/cvsroot/opentracker/ot_http.c,v $: $Revision: 1.53 $\n";
