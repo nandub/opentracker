@@ -105,7 +105,8 @@ static int fullscrape_increase( int *iovec_entries, struct iovec **iovector,
     *re -= OT_SCRAPE_MAXENTRYLEN;
     strm->next_out  = (uint8_t*)*r;
     strm->avail_out = OT_SCRAPE_CHUNK_SIZE;
-    if( deflate( strm, zaction ) < Z_OK )
+    zres = deflate( strm, zaction );
+    if( ( zres < Z_OK ) && ( zres != Z_BUF_ERROR ) )
       fprintf( stderr, "deflate() failed while in fullscrape_increase(%d).\n", zaction );
     *r = (char*)strm->next_out;
   }
@@ -191,9 +192,11 @@ static void fullscrape_make( int *iovec_entries, struct iovec **iovector, ot_tas
 
 #ifdef WANT_COMPRESSION_GZIP
      if( mode & TASK_FLAG_GZIP ) {
+        int zres;
         strm.next_in  = (uint8_t*)compress_buffer;
         strm.avail_in = r - compress_buffer;
-        if( deflate( &strm, Z_NO_FLUSH ) < Z_OK )
+        zres = deflate( &strm, Z_NO_FLUSH );
+        if( ( zres < Z_OK ) && ( zres != Z_BUF_ERROR ) )
           fprintf( stderr, "deflate() failed while in fullscrape_make().\n" );
         r = (char*)strm.next_out;
       }
@@ -238,4 +241,4 @@ static void fullscrape_make( int *iovec_entries, struct iovec **iovector, ot_tas
 }
 #endif
 
-const char *g_version_fullscrape_c = "$Source: /home/cvsroot/opentracker/ot_fullscrape.c,v $: $Revision: 1.34 $\n";
+const char *g_version_fullscrape_c = "$Source: /home/cvsroot/opentracker/ot_fullscrape.c,v $: $Revision: 1.35 $\n";
