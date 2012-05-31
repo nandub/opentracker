@@ -102,6 +102,7 @@ static int fullscrape_increase( int *iovec_entries, struct iovec **iovector,
   /* When compressing, we have all the bytes in output buffer */
 #ifdef WANT_COMPRESSION_GZIP
   if( mode & TASK_FLAG_GZIP ) {
+    int zres;
     *re -= OT_SCRAPE_MAXENTRYLEN;
     strm->next_out  = (uint8_t*)*r;
     strm->avail_out = OT_SCRAPE_CHUNK_SIZE;
@@ -241,4 +242,4 @@ static void fullscrape_make( int *iovec_entries, struct iovec **iovector, ot_tas
 }
 #endif
 
-const char *g_version_fullscrape_c = "$Source: /home/cvsroot/opentracker/ot_fullscrape.c,v $: $Revision: 1.35 $\n";
+const char *g_version_fullscrape_c = "$Source: /home/cvsroot/opentracker/ot_fullscrape.c,v $: $Revision: 1.36 $\n";
