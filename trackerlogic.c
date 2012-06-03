@@ -411,13 +411,12 @@ void exerr( char * message ) {
 }
 
 void trackerlogic_init( ) {
-  srandom( time(NULL) );
   g_tracker_id = random();
 
   if( !g_stats_path )
     g_stats_path = "stats";
   g_stats_path_len = strlen( g_stats_path );
-  
+
   /* Initialise background worker threads */
   mutex_init( );
   clean_init( );
@@ -455,4 +454,4 @@ void trackerlogic_deinit( void ) {
   mutex_deinit( );
 }
 
-const char *g_version_trackerlogic_c = "$Source: /home/cvsroot/opentracker/trackerlogic.c,v $: $Revision: 1.137 $\n";
+const char *g_version_trackerlogic_c = "$Source: /home/cvsroot/opentracker/trackerlogic.c,v $: $Revision: 1.138 $\n";
